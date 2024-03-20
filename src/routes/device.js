@@ -227,15 +227,15 @@ deviceRouter.put('/:id/:campo/:valor', async (req, res) => {
         
         await dispositivo.save();
 
-        const texto ='';
-        if(campo==='estado')texto='Estado de la Ventana';
-        if(campo==='cerradura')texto='Cerradura';
-        if(campo==='pir')texto='Sensor de moviniento';
-        if(campo==='lluvia')texto='Lluvia';
+        // const texto ='';
+        // if(campo==='estado')texto='Estado de la Ventana';
+        // if(campo==='cerradura')texto='Cerradura';
+        // if(campo==='pir')texto='Sensor de moviniento';
+        // if(campo==='lluvia')texto='Lluvia';
 
-        // Registra en el historial el cambio del campo
-        const historicoCampo = new Historico({ idDevice: id, variable: texto, valor: valor, fecha: new Date() });
-        await historicoCampo.save();
+        // // Registra en el historial el cambio del campo
+        // const historicoCampo = new Historico({ idDevice: id, variable: texto, valor: valor, fecha: new Date() });
+        // await historicoCampo.save();
 
         res.status(200).json({ message: `Campo ${campo} del dispositivo actualizado correctamente` });
     } catch (error) {
