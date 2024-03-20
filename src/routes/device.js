@@ -228,8 +228,8 @@ deviceRouter.put('/:id/:campo/:valor', async (req, res) => {
         await dispositivo.save();
 
         // Registra en el historial el cambio del campo
-        const historicoCampo = new Historico({ idDevice: id, variable: campo, valor: valor, fecha: new Date() });
-        await historicoCampo.save();
+        //const historicoCampo = new Historico({ idDevice: id, variable: campo, valor: valor, fecha: new Date() });
+        //await historicoCampo.save();
 
         res.status(200).json({ message: `Campo ${campo} del dispositivo actualizado correctamente` });
     } catch (error) {
