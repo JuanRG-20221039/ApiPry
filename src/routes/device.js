@@ -203,3 +203,29 @@ try {
     res.status(500).json({ error: error.message });
     }
 });
+
+// Modificar el estado de un dispositivo
+deviceRouter.put('/:id/estado', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { estado } = req.body;
+
+        // Verifica si el dispositivo existe
+        const dispositivo = await Dispositivo.findById(id);
+        if (!dispositivo) {
+            return res.status(404).json({ error: 'Dispositivo no encontrado' });
+        }
+
+        // Actualiza el estado del dispositivo
+        dispositivo.estado = estado;
+        await dispositivo.save();
+
+        // Registra en el historial el cambio de estado
+        const historicoEstado = new Historico({ idDevice: id, variable: 'Estado de la Ventana', valor: estado, fecha: new Date() });
+        await historicoEstado.save();
+
+        res.status(200).json({ message: 'Estado del dispositivo actualizado correctamente' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
