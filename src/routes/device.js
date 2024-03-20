@@ -205,10 +205,9 @@ try {
 });
 
 // Modificar el estado de un dispositivo
-deviceRouter.put('/:id/estado', async (req, res) => {
+deviceRouter.put('/:id/estado/:estado', async (req, res) => {
     try {
-        const { id } = req.params;
-        const { estado } = req.body;
+        const { id, estado } = req.params;
 
         // Verifica si el dispositivo existe
         const dispositivo = await Dispositivo.findById(id);
