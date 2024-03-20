@@ -207,7 +207,7 @@ try {
 
 
 
-// Modificar cualquier campo de un dispositivo
+// Modificar un campo específico de un dispositivo
 deviceRouter.put('/:id/:campo/:valor', async (req, res) => {
     try {
         const { id, campo, valor } = req.params;
@@ -218,20 +218,20 @@ deviceRouter.put('/:id/:campo/:valor', async (req, res) => {
             return res.status(404).json({ error: 'Dispositivo no encontrado' });
         }
 
-        // Verifica si el campo a modificar es válido
-        if (!dispositivo.hasOwnProperty(campo)) {
-            return res.status(400).json({ error: 'Campo no válido' });
-        }
-
         // Actualiza el campo del dispositivo
-        dispositivo[campo] = valor;
+        if (dispositivo[campo] !== undefined) {
+            dispositivo[campo] = valor;
+        } else {
+            return res.status(400).json({ error: 'Campo no válido para el dispositivo' });
+        }
+        
         await dispositivo.save();
 
         // Registra en el historial el cambio del campo
         const historicoCampo = new Historico({ idDevice: id, variable: campo, valor: valor, fecha: new Date() });
         await historicoCampo.save();
 
-        res.status(200).json({ message: `Campo '${campo}' del dispositivo actualizado correctamente` });
+        res.status(200).json({ message: `Campo ${campo} del dispositivo actualizado correctamente` });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
