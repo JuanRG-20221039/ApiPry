@@ -12,6 +12,8 @@ import path from 'path';
 import { productRouter } from './src/routes/products.js';
 import cookieParser from 'cookie-parser';
 import { deviceRouter } from './src/routes/device.js';
+import { informacionRouter } from './src/routes/informacion.js';
+
 export const __dirname = path.resolve();
 dotenv.config();
 const app = express()
@@ -55,6 +57,7 @@ app.use('/admin', verificarTokenAdmin)
 app.use('/recovery', verificarToken, recuperacionRouter)
 app.use('/images', imagesRouter)
 app.use('/devices', deviceRouter)
+app.use('/informacion', informacionRouter);
 // Middleware de manejo de errores
 app.use((err, req, res, next) => {
     console.error(err.stack);
