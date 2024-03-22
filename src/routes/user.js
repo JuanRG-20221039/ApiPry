@@ -56,8 +56,8 @@ userRouter.delete('',(req,res)=>{
 })
 
 // Ruta para buscar usuarios por correo electrónico
-userRouter.get('/buscar', (req, res) => {
-    const { email } = req.query; // Obtener el correo electrónico de la consulta
+userRouter.get('/buscar/:email', (req, res) => {
+    const email = req.params.email; // Obtener el correo electrónico de los parámetros de ruta
     usersSchema.findOne({ 'datosCuenta.email': email }) // Buscar un usuario por el correo electrónico
       .then(user => {
         if (!user)
