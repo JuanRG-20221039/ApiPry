@@ -55,6 +55,7 @@ userRouter.delete('',(req,res)=>{
   .catch(error=>res.status(500).json({message:error}))
 })
 
+//cambiar contraseña
 export const cambiarContrasena = async (req, res) => {
     try {
         const { idUsuario, nuevaContrasena } = req.body;
