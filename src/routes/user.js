@@ -15,6 +15,7 @@ userRouter.get('',(req,res)=>{
   })
   .catch(error=>res.status(400).json({message:error}))
 })
+
 // Actualizar un usuario por ID 
 userRouter.put('', (req, res) => {
   const { userId:id } = req.userData;
@@ -40,6 +41,7 @@ userRouter.patch('', (req, res) => {
       })
       .catch(error => res.status(500).json({ message: error }));
 });
+
 //eliminar usuario
 userRouter.delete('',(req,res)=>{
   const { userId:id } = req.userData;
@@ -52,3 +54,16 @@ userRouter.delete('',(req,res)=>{
   })
   .catch(error=>res.status(500).json({message:error}))
 })
+
+//buscar por correo
+userRouter.get('/buscar', (req, res) => {
+    const { email } = req.query; // Obtener el correo electrónico de la consulta
+    usersSchema.find({ 'datosCuenta.email': email }) // Buscar usuarios por el correo electrónico
+      .then(data => {
+        if (data.length === 0)
+          res.status(404).json({ message: 'Usuarios no encontrados' });
+        else
+          res.json(data);
+      })
+      .catch(error => res.status(500).json({ message: error }));
+  });
