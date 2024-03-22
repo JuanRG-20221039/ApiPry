@@ -1,8 +1,8 @@
-
 import { usersSchema } from '../models/users.js'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 const saltRounds = 10;
+
 // Operación de Crear Usuario
 export const crearUsuario = async (req, res) => {
     try {
@@ -99,6 +99,35 @@ export const eliminarUsuario = async (req, res) => {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
         res.status(200).json({ message: 'Usuario eliminado correctamente' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const cambiarContrasena = async (req, res) => {
+    try {
+        const { idUsuario, nuevaContrasena } = req.body;
+
+        // Verificar si se proporcionó una nueva contraseña
+        if (!nuevaContrasena || nuevaContrasena.length < 8) {
+            return res.status(400).json({ error: 'La nueva contraseña debe tener al menos 8 caracteres' });
+        }
+
+        // Hashear la nueva contraseña
+        const hashedPassword = await bcrypt.hash(nuevaContrasena, saltRounds);
+
+        // Actualizar la contraseña del usuario en la base de datos
+        const usuario = await usersSchema.findByIdAndUpdate(
+            idUsuario,
+            { 'datosCuenta.password': hashedPassword },
+            { new: true }
+        );
+
+        if (!usuario) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        res.status(200).json({ message: 'Contraseña actualizada correctamente' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
