@@ -147,6 +147,11 @@ recuperacionRouter.post('/password', async (req,res)=>{
   }
 })
 
+
+
+
+
+
 //envio de correos para el usuario
 //email de recuperación
 recuperacionRouter.get('/email/:tipo', async(req,res)=>{
