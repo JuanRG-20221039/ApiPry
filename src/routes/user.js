@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { usersSchema } from '../models/users.js'
+import { cambiarContrasena } from '../controllers/usuarios.js';
 // import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
 export const userRouter = Router()
@@ -55,4 +56,18 @@ userRouter.delete('',(req,res)=>{
   .catch(error=>res.status(500).json({message:error}))
 })
 
+userRouter.put('/cambiar-contrasena', async (req, res) => {
+    try {
+        // Extrae los datos necesarios del cuerpo de la solicitud
+        const { userId: id } = req.userData;
+        const { nuevaContrasena } = req.body;
 
+        // Llama a la función para cambiar contraseña
+        const result = await cambiarContrasena(id, nuevaContrasena);
+
+        // Envía la respuesta adecuada
+        res.status(200).json({ message: 'Contraseña actualizada correctamente' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
