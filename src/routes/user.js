@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { usersSchema } from '../models/users.js'
-import { cambiarContrasena } from '../controllers/usuarios.js';
+import { cambiarContrasena } from '../controllers/users.js';
 // import bcrypt from 'bcrypt';
 // import jwt from 'jsonwebtoken';
 export const userRouter = Router()
