@@ -55,15 +55,15 @@ userRouter.delete('',(req,res)=>{
   .catch(error=>res.status(500).json({message:error}))
 })
 
-//buscar por correo
+// Ruta para buscar usuarios por correo electrónico
 userRouter.get('/buscar', (req, res) => {
     const { email } = req.query; // Obtener el correo electrónico de la consulta
-    usersSchema.find({ 'datosCuenta.email': email }) // Buscar usuarios por el correo electrónico
-      .then(data => {
-        if (data.length === 0)
-          res.status(404).json({ message: 'Usuarios no encontrados' });
+    usersSchema.findOne({ 'datosCuenta.email': email }) // Buscar un usuario por el correo electrónico
+      .then(user => {
+        if (!user)
+          res.status(404).json({ message: 'Usuario no encontrado' });
         else
-          res.json(data);
+          res.json(user);
       })
       .catch(error => res.status(500).json({ message: error }));
   });
