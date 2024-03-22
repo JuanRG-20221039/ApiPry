@@ -52,16 +52,3 @@ userRouter.delete('',(req,res)=>{
   })
   .catch(error=>res.status(500).json({message:error}))
 })
-
-// Obtener usuario por correo electrónico
-userRouter.get('/by-email', (req, res) => {
-    const { email } = req.query;
-    usersSchema.findOne({ 'datosCuenta.email': email })
-      .then(data => {
-        if (!data)
-          res.status(404).json({ message: 'Usuario no encontrado' });
-        else
-          res.json(data);
-      })
-      .catch(error => res.status(400).json({ message: error }));
-  });
