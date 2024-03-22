@@ -9,6 +9,4 @@ usersRouter.post('', crearUsuario);
 usersRouter.get('/:id', obtenerUsuarioPorId);
 usersRouter.put('/:id', actualizarUsuario);
 usersRouter.delete('/:id', eliminarUsuario);
-
-// Nueva ruta para cambiar la contraseña
 usersRouter.put('/:id/cambiar-contrasena', cambiarContrasena);
