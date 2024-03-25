@@ -9,6 +9,7 @@ export const deviceRouter = Router()
 // Ruta para manejar la actualización de datos
 deviceRouter.post('/actualizarDatos', async (req, res) => {
     try {
+
         const { name,estado,cerradura,pir,lluvia } = req.body;
         //65ec920163a4ecc05c177e18
         // Verifica la existencia del dispositivo en la base de datos
@@ -53,7 +54,7 @@ deviceRouter.post('/actualizarDatos', async (req, res) => {
         }
 
         // Retorna los datos actualizados
-        const updatedData = await Dispositivo.findOne({ _id: device_label }, { estado: 0,cerradura:0 ,pir:0 ,lluvia: 0, _id: 0 });
+        //const updatedData = await Dispositivo.findOne({ _id: device_label }, { estado: 0,cerradura:0 ,pir:0 ,lluvia: 0, _id: 0 });
 
 
         return res.json(updatedData);
