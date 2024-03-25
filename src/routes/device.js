@@ -57,7 +57,8 @@ deviceRouter.post('/actualizarDatos', async (req, res) => {
         //const updatedData = await Dispositivo.findOne({ _id: device_label }, { estado: 0,cerradura:0 ,pir:0 ,lluvia: 0, _id: 0 });
 
 
-        return res.json(updatedData);
+        //return res.json(updatedData);
+        return res.json({ message: 'Datos registrados en el historial' });
     } catch (error) {
         return res.status(500).json({ error: 'Error en el servidor' });
     }
