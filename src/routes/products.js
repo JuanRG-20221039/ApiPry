@@ -46,3 +46,23 @@ productRouter.post('/agregar', (req, res) => {
             res.status(400).json({ message: error }); // Manejar el error si ocurre
         });
 });
+
+// Ruta para eliminar un producto por su ID
+productRouter.delete('/:id', (req, res) => {
+    const { id } = req.params;
+
+    // Buscar y eliminar el producto por su ID
+    productsSchema.findByIdAndDelete(id)
+        .then(productoEliminado => {
+            if (!productoEliminado) {
+                // Si no se encuentra el producto, devolver un mensaje de error
+                return res.status(404).json({ message: 'Producto no encontrado' });
+            }
+            // Devolver el producto eliminado como respuesta
+            res.json(productoEliminado);
+        })
+        .catch(error => {
+            // Manejar errores
+            res.status(400).json({ message: error });
+        });
+});
