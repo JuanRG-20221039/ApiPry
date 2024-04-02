@@ -21,3 +21,28 @@ productRouter.get('/:id',(req,res)=>{
     })
     .catch(error=>res.status(400).json({message:error}))
 })
+
+// Ruta para agregar un producto
+productRouter.post('/agregar', (req, res) => {
+    // Extraer los datos del cuerpo de la solicitud
+    const { nombre, descripcion, precio, stock, tipo, imagen } = req.body;
+
+    // Crear una nueva instancia del modelo de productos con los datos proporcionados
+    const nuevoProducto = new productsSchema({
+        nombre,
+        descripcion,
+        precio,
+        stock,
+        tipo,
+        imagen
+    });
+
+    // Guardar el producto en la base de datos
+    nuevoProducto.save()
+        .then(productoGuardado => {
+            res.status(201).json(productoGuardado); // Devolver el producto guardado en la respuesta
+        })
+        .catch(error => {
+            res.status(400).json({ message: error }); // Manejar el error si ocurre
+        });
+});

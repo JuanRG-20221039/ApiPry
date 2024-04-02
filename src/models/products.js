@@ -11,4 +11,3 @@ export const productsSchema = mongoose.model(
     imagen: { type: String }
   })
 );
-
