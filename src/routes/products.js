@@ -66,3 +66,33 @@ productRouter.delete('/:id', (req, res) => {
             res.status(400).json({ message: error });
         });
 });
+
+// Ruta para modificar un producto por su ID
+productRouter.put('/:id', (req, res) => {
+    const { id } = req.params;
+
+    // Extraer los datos actualizados del cuerpo de la solicitud
+    const { nombre, descripcion, precio, stock, tipo, imagen } = req.body;
+
+    // Buscar y actualizar el producto por su ID
+    productsSchema.findByIdAndUpdate(id, {
+        nombre,
+        descripcion,
+        precio,
+        stock,
+        tipo,
+        imagen
+    }, { new: true }) // {new: true} devuelve el documento actualizado
+        .then(productoActualizado => {
+            if (!productoActualizado) {
+                // Si no se encuentra el producto, devolver un mensaje de error
+                return res.status(404).json({ message: 'Producto no encontrado' });
+            }
+            // Devolver el producto actualizado como respuesta
+            res.json(productoActualizado);
+        })
+        .catch(error => {
+            // Manejar errores
+            res.status(400).json({ message: error });
+        });
+});
