@@ -35,3 +35,39 @@ informacionRouter.get('/tipo/:tipo', (req, res) => {
         })
         .catch(error => res.status(400).json({ message: error }));
 });
+
+// Agregar nueva información
+informacionRouter.post('/agregar', (req, res) => {
+    const { tipo, informacion } = req.body;
+    const nuevaInformacion = new informacionSchema({ tipo, informacion });
+    nuevaInformacion.save()
+        .then(data => res.status(201).json(data))
+        .catch(error => res.status(400).json({ message: error }));
+});
+
+// Eliminar información por id
+informacionRouter.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    informacionSchema.findByIdAndDelete(id)
+        .then(deletedData => {
+            if (!deletedData)
+                res.status(404).json({ message: 'No se encontró la información para eliminar' });
+            else
+                res.json({ message: 'Informacion eliminada exitosamente' });
+        })
+        .catch(error => res.status(400).json({ message: error }));
+});
+
+// Modificar información por id
+informacionRouter.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const { tipo, informacion } = req.body;
+    informacionSchema.findByIdAndUpdate(id, { tipo, informacion }, { new: true })
+        .then(updatedData => {
+            if (!updatedData)
+                res.status(404).json({ message: 'No se encontró la información para modificar' });
+            else
+                res.json(updatedData);
+        })
+        .catch(error => res.status(400).json({ message: error }));
+});
