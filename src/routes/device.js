@@ -154,21 +154,20 @@ deviceRouter.post('/user', async (req, res) => {
 //asignar un dispositivo a un usuario
 deviceRouter.post('/user/:id', async (req, res) => {
     try {
-        const { dispositivoID } = req.body;
-        const userId = req.params.id; // Obtén el ID del usuario de los parámetros de la URL
-        const usuario = await usersSchema.findById(userId);
+        const { dispositivoID } = req.body
+        const usuario = await usersSchema.findById(req.params.id);
         if (!usuario) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
         usuario.dispositivos.push({ idDispositivo: dispositivoID });
         await usuario.save();
-        const dispositivo = await Dispositivo.updateOne({ _id: dispositivoID }, { asignado: true, userId: userId }); // Asigna el ID del usuario al dispositivo
+        const dispositivo = await Dispositivo.updateOne({ _id: dispositivoID }, { asignado: true });
 
         res.json(usuario);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-});
+})
 
 //eliminar un dispositivo
 deviceRouter.delete('/:id', async (req, res) => {
@@ -232,6 +231,21 @@ deviceRouter.put('/:id/:campo/:valor', async (req, res) => {
         await dispositivo.save();
 
         res.status(200).json({ message: `Campo ${campo} del dispositivo actualizado correctamente` });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Ruta para obtener un dispositivo por su tokenD
+deviceRouter.get('/token/:tokenD', async (req, res) => {
+    try {
+        const { tokenD } = req.params;
+        // Buscar el dispositivo por su tokenD
+        const dispositivo = await Dispositivo.findOne({ tokenD });
+        if (!dispositivo) {
+            return res.status(404).json({ error: 'Dispositivo no encontrado' });
+        }
+        res.status(200).json(dispositivo);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
