@@ -154,20 +154,21 @@ deviceRouter.post('/user', async (req, res) => {
 //asignar un dispositivo a un usuario
 deviceRouter.post('/user/:id', async (req, res) => {
     try {
-        const { dispositivoID } = req.body
-        const usuario = await usersSchema.findById(req.params.id);
+        const { dispositivoID } = req.body;
+        const userId = req.params.id; // Obtén el ID del usuario de los parámetros de la URL
+        const usuario = await usersSchema.findById(userId);
         if (!usuario) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
         usuario.dispositivos.push({ idDispositivo: dispositivoID });
         await usuario.save();
-        const dispositivo = await Dispositivo.updateOne({ _id: dispositivoID }, { asignado: true });
+        const dispositivo = await Dispositivo.updateOne({ _id: dispositivoID }, { asignado: true, userId: userId }); // Asigna el ID del usuario al dispositivo
 
         res.json(usuario);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-})
+});
 
 //eliminar un dispositivo
 deviceRouter.delete('/:id', async (req, res) => {
