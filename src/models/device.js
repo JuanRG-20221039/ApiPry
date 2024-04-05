@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 
 const dispositivoSchema = new mongoose.Schema({
     name:{type:String},
-    tokenD: { type: Number},
     estado: { type: Number, required: true },
     cerradura: { type: Number, required: true },
     pir: { type: Number, required: true },

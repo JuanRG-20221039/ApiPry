@@ -65,25 +65,22 @@ deviceRouter.post('/actualizarDatos', async (req, res) => {
 });
 
 
-// Ruta para crear un nuevo dispositivo
+//crear un nuevo dispositivo
 deviceRouter.post('', async (req, res) => {
     try {
-        const { tokenD } = req.body;
-        const dispositivo = new Dispositivo({
-            tokenD: tokenD,
-            estado: 0,
-            cerradura: 0,
-            pir: 0,
-            lluvia: 0,
-            asignado: false
-        });
+        const dispositivo = new Dispositivo
+        dispositivo.estado = 0
+        dispositivo.cerradura = 0
+        dispositivo.pir = 0
+        dispositivo.lluvia = 0
+        dispositivo.asignado = false
         await dispositivo.save();
-        res.status(201).json({ message: 'Dispositivo creado con éxito' });
+        res.status(201).json({ message: 'Dispositivo creado con exito' })
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'Error en el servidor' });
     }
-});
+})
+
 
 //Obtener todos los dispositivos
 deviceRouter.get('', async (req, res) => {
@@ -209,6 +206,9 @@ try {
     }
 });
 
+
+
+
 // Modificar un campo específico de un dispositivo
 deviceRouter.put('/:id/:campo/:valor', async (req, res) => {
     try {
@@ -228,6 +228,16 @@ deviceRouter.put('/:id/:campo/:valor', async (req, res) => {
         }
         
         await dispositivo.save();
+
+        // const texto ='';
+        // if(campo==='estado')texto='Estado de la Ventana';
+        // if(campo==='cerradura')texto='Cerradura';
+        // if(campo==='pir')texto='Sensor de moviniento';
+        // if(campo==='lluvia')texto='Lluvia';
+
+        // // Registra en el historial el cambio del campo
+        // const historicoCampo = new Historico({ idDevice: id, variable: texto, valor: valor, fecha: new Date() });
+        // await historicoCampo.save();
 
         res.status(200).json({ message: `Campo ${campo} del dispositivo actualizado correctamente` });
     } catch (error) {
