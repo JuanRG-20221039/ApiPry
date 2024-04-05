@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/josevargas1229/api-pasteleria.git"
+    "url": "git+https://github.com/JuanRG-20221039/ApiPry"
   },
   "keywords": [
     "API",
@@ -23,9 +23,9 @@
   "author": "Jose de Jesus Vargas Esparza",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/josevargas1229/api-pasteleria/issues"
+    "url": "https://github.com/JuanRG-20221039/ApiPry/issues"
   },
-  "homepage": "https://github.com/josevargas1229/api-pasteleria#readme",
+  "homepage": "https://github.com/JuanRG-20221039/ApiPry",
   "devDependencies": {
     "eslint": "8.56.0",
     "nodemon": "^3.1.0"
