@@ -66,7 +66,7 @@ deviceRouter.post('/actualizarDatos', async (req, res) => {
 
 
 // Ruta para crear un nuevo dispositivo
-deviceRouter.post('/crearDispositivo', async (req, res) => {
+deviceRouter.post('', async (req, res) => {
     try {
         const { tokenD } = req.body;
         const dispositivo = new Dispositivo({
@@ -78,9 +78,9 @@ deviceRouter.post('/crearDispositivo', async (req, res) => {
             asignado: false
         });
         await dispositivo.save();
-        res.status(201).json({ message: 'Dispositivo creado con éxito', dispositivo });
+        res.status(201).json({ message: 'Dispositivo creado con éxito' });
     } catch (error) {
-        console.error('Error al crear dispositivo:', error);
+        console.log(error);
         res.status(500).json({ error: 'Error en el servidor' });
     }
 });
